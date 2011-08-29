@@ -1,0 +1,7 @@
+include *.py
+include *.g
+include *.vel
+include LICENSE
+include NOTES
+recursive-include tests *.py *.html
+recursive-include scripts

@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <p>Here's a test.</p>
+        ### @include "tests/data/test.py" "Closing"
+        ### @end
+
+        <p>Another test as raw text.</p>
+        <pre>
+        ### @include "tests/data/test.py" "Beginning Preamble" text
+        ### @end
+        </pre>
+
+        <p>And again with html format</p>
+        <pre>
+        ### @include "tests/data/test.py" "Main Function" html
+        ### @end
+        </pre>
+    </body>
+</html>

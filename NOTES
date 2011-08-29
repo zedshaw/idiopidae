@@ -1,0 +1,24 @@
+This is the first public release of Idiopidae in a form that other
+people can use.  It's still rough as I'm still learning my Python,
+but writing this in Python has been great so far.  Right now Idiopidae
+has all the features I need to work on my book and to document 
+Idiopidae itself.  These include:
+
+* Named or anonymous sections of code via simple export comments.
+* Inclusion of sections based on the file and the name.
+* Formatting input with Pygments which is either guessed or explicit.
+* Formatting of the output can also be guessed or explicity.
+* Simplistic line numbering which will be changed to use Pygments' own setup.
+* Reasonably fast without doing any on-disk caching of the compiled results.
+* Full API to allow parsing a document and analyzing the contents via sections.
+* Complete (or nearly) test suite using nose.
+
+You use Idiopidae by simply running the idio script against an input "prose"
+document with include statements.  This script then parses the prose and
+tries to find the files/sections you want to include.  It then writes
+the results to stdout for you to view or store.  Something like this:
+
+  > idio doc/src/index.page > sample.page
+
+Future versions will include a simple building tool and the ability to set
+options.

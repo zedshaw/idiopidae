@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <title>Idiopidae</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Your description goes here..." />
+    <meta name="keywords" content="your,keywords,goes,here" />
+    <meta name="author" content="Your Name" />
+    <meta name="generator" content="webgen - http://webgen.rubyforge.com/" />
+    <link href="default.css" rel="stylesheet" type="text/css" />
+    <link href="css/webgen.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div id="header">
+      <h1>Idiopidae</h1>
+    </div>
+
+    <div id="headerbar" class="bar">
+      <span class="left">Location: <span>Idiopidae</span> / <span>Idiopidae</span></span>
+      <span class="right">Language: <span>en</span></span>
+      <div style="clear:both"></div>
+    </div>
+
+    <div id="menu">
+      <div class="webgen-menu-vert webgen-menu"><ul><li class="webgen-menu-item-selected"><span>Idiopidae</span></li></ul></div>
+    </div>
+
+    <div id="body">
+      <h1>Idiopidae: code is code; prose is prose.</h1>
+
+
+	<p>Idiopidae is my attempt at finally releasing something that 
+makes it easier for technical documentation authors to write.</p>
+
+
+	<p>The purpose of Idiopidae is to keep the code in the code, 
+and the prose in the prose, and then merge the two together
+based on very light comments in the source.</p>
+
+
+	<p>You can see the <a href="//index.html">original <span class="caps">HTML</span></a> of this file as well as the
+<a href="/idiotest/test.html">final output</a> to compare the two</p>
+
+
+	<h2>Concepts</h2>
+
+
+	<p>Idiopidae works on the idea that in your &#8220;prose&#8221; file you&#8217;ll
+put <em>include</em> statements as comments, and in your &#8220;code&#8221; file
+you&#8217;ll put <em>export</em> statements to mark off regions of code that
+need to be named.</p>
+
+
+	<p>When you run the <strong>idio</strong> Python script on your prose file, it
+follows the <em>include</em> statements and loads the file and section
+you specify into an output result.  It will also format it with
+the <a href="http://pygments.org/docs/quickstart/">Pygments</a> library
+to produce nice typsetting (currently defaults to <span class="caps">HTML</span>).</p>
+
+
+	<p>This file you&#8217;re reading right now is simply a <a href="http://hobix.com/textile/">Textile</a>
+prose file that includes and describes Idiopidae&#8217;s source.
+The process for creating it was:</p>
+
+
+<blockquote>
+	<p>cd doc
+	webgen
+	idio output/index.html  &gt; output/test.html</p>
+
+</blockquote>
+
+
+
+
+	<p>The source is available from a Bazaar repository at:</p>
+
+
+	<pre><code><a href="http://www.zedshaw.com/repository/zapps">http://www.zedshaw.com/repository/zapps</a></code></pre>
+
+
+	<p>As currently just a demo of <a href="/projects/zapps">Zapps</a> but it
+will be moved into its own project folder soon as it is good
+enough to use and distribute.</p>
+
+
+	<h1>The Runtime</h1>
+
+
+	<p>It&#8217;s best if we start with the runtime.py file, which is responsible for
+using the IdiopidaeParser to process the files.  It starts off with your
+typical boilerplate code but I like the with statement so I include some
+future stuff:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/runtime.py" 1 html
+### @end
+</pre>
+</blockquote>
+
+	<p>Next we need to keep track of stuff:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/runtime.py" "Builder Class" html
+### @end
+</pre>
+</blockquote>
+
+	<p>Now, there&#8217;s three methods that the parser uses heavily
+during the parsing phase to chunk up a document into the
+proper structure for later analysis:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/runtime.py" "Main Methods: include, export, append" html
+### @end
+</pre>
+</blockquote>
+
+	<p>These aren&#8217;t used by callers so much as by the IdiopidaeParser
+and the Composer.  These methods then use:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/runtime.py" "next_statement" html
+### @end
+</pre>
+</blockquote>
+
+	<p>To swap into the next statement and:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/runtime.py" "append_current_export" html
+### @end
+</pre>
+</blockquote>
+
+	<p>To append each export to a list of exports found.</p>
+
+
+	<p>The process we&#8217;re describing involves the IdiopidaeParser
+using the Builder under the direction of the Composer:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/runtime.py" "Composer Class" html
+### @end
+</pre>
+</blockquote>
+
+	<p>It is built with a simple loop in the idio file that
+acts as a binary for users to run:</p>
+
+
+<blockquote>
+<pre>
+### @include "bin/idio" 1 html
+### @end
+</pre>
+</blockquote>
+
+	<p>First we have how a file is loaded and parsed by
+the composer:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/runtime.py" "How Files Are Loaded" html
+### @end
+</pre>
+</blockquote>
+
+	<p>which is actually used by the <strong>process</strong> method:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/runtime.py" "How Files Are Processed" html
+### @end
+</pre>
+</blockquote>
+
+	<p>This is the most complex method since it is where all
+the real work is being done.  It loads the file we
+want to compose, and goes through all the sections.
+Any section that&#8217;s an export is just printed out, but
+any section that&#8217;s an import is processed as another
+call to <strong>include</strong> and <strong>format</strong> to get the text:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/runtime.py"  "Formatting Lines With or Without Numbers" html
+### @end
+</pre>
+</blockquote>
+
+	<p>The <strong>include</strong> method is actually very simple:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/runtime.py" "How Other Sections Are Included" html
+### @end
+</pre>
+</blockquote>
+
+	<p>And that&#8217;s all of idiopidae except the parser, which we&#8217;ll
+go over next.</p>
+
+
+	<h1>The Parser</h1>
+
+
+	<p>The parser is the key to how Idiopidae works and it uses
+the <a href="/projects/zapps/">Zapps</a> that I adopted recently.  It
+shows you can easily crank out little parsers for little
+languages that are fast enough for real work.</p>
+
+
+	<p>Since most people don&#8217;t get parsers, you could do good to
+use <a href="http://bazaar-vcs.org/">bzr</a> to grab the code and study
+how this file is translated into the idiopidae.py file.</p>
+
+
+	<p>Every parser generator has three main components: code stuff,
+tokens, and grammar rules.  For Idiopidae there&#8217;s not much
+code stuff than the import of the runtime:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/parser.g" starter html
+### @end
+</pre>
+</blockquote>
+
+	<p>Then we just start off the parser declaration, which will
+be turned into a class named <em>idiopidae.IdiopidaeParser</em>
+that you can run:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/parser.g" grammar html
+### @end
+</pre>
+</blockquote>
+
+	<p>Now, we need to have a bunch of tokens which we want to 
+either discard as just visual aids for the user, or keep
+as input data:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/parser.g" tokens html
+### @end
+</pre>
+</blockquote>
+
+	<p>You can&#8217;t tell from the above list what it is dropped and what
+is kept, for that you have to look in the grammar.  The trick
+is we define all the base &#8220;words&#8221; or tokens and then we use the
+grammar to sift through them to pull out what is considered <em>Junk</em>
+or a <em>Statement</em>:</p>
+
+
+<blockquote>
+<pre>
+### @include "idiopidae/parser.g" rules text
+### @end
+</pre>
+</blockquote>
+
+	<p>More on reading this later.</p>
+    </div>
+
+    <div id="footer" class="bar">
+      <a href="http://webgen.rubyforge.org"><img src="images/webgen-generated-by.png" alt="Generated by webgen"/></a> on <b>Saturday, December 06 02:47:54 EST 2008</b>
+    </div>
+  </body>
+</html>

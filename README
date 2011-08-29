@@ -1,0 +1,53 @@
+This is a quick README that will be more extensive later.
+
+Basically, you get a command named "idio" that takes a single file as the
+argument and writes the results to stdout.  You use it like this:
+
+idio input.html > output.html
+idio input.tex > output.tex
+idio input.txt > output.txt
+
+The actual difficult part is putting the right "section comments" in your code
+and prose.  A section comment looks like this:
+
+### @import "file" "section" ("format")
+
+* The ### can also be /// for other languages.
+* The "file" is a string only that is relative to wherever you are running things.
+* The "section" can be:
+** an integer for any section that's anonymous.
+** a string for a named section.
+** an identifier for a named section.
+** Use 1 to import a whole file that has no other exports.
+** The optional format (the () are not needed) is html, text, etc.
+
+One wart on the grammar is if you don't have the format then don't put
+any whitespace at the end.
+
+In your code (or any file really) you put export sections:
+
+### @export "The Thing You Wanted"
+### @export the_thing
+
+This is how the @imports find your stuff.  Idiopidae will open the
+files you tell it in the @import statements, parse them into memory
+with all the sections, and then snarfs up and format the sections
+you wanted.  It automatically figures out the format from the file
+extension.
+
+FUTURE IMPROVEMENTS
+
+I quickly cranked out this version of Idiopidae so I could start
+using it, but it's not optimal.  It doesn't have any configuration
+files, no command line options, you can't change the export langauge,
+and the syntax isn't the best.  I'll be doing another release soon
+that will change the format of the import/export sections and add
+an exec section which will take Python/Vellum code, run it, and
+put the results into the book.
+
+Enjoy though, it does make some beautiful books, especially with
+LaTeX.  If you want a really good example of using Idiopidae with LaTeX
+then look at the Vellum project in the doc directory:
+
+http://launchpad.net/vellum/
+

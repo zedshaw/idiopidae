@@ -1,0 +1,37 @@
+options(
+        default 'testing.run'
+        sudo 'sudo'
+        version "0.5"
+        setup(
+            name "idiopidae"  
+            version "0.5"  
+            author "Zed A. Shaw" 
+            description "A book compiler for programmers where code and prose are separate." 
+            author_email "zedshaw@zedshaw.com" 
+            url "http://www.zedshaw.com/projects/idiopidae" 
+            packages ["idiopidae"] 
+            scripts ["bin/idio"] 
+        )
+        project "idiopidae"
+        website '../zedshaw.com/output/projects/idiopidae'
+)
+
+imports [
+    recipe(from "scripts/dist" as "dist")
+    recipe(from "scripts/testing" as "testing")
+]
+
+depends(
+        build ['dist.clean' 'tests' 'dist.install' 'docs' 'dist']
+        commit ['dist.clean']
+        tests ['parser' 'testing.run']
+)
+
+targets(
+        commit [
+            $ bzr commit 
+            $ bzr push
+        ]
+        docs 'cd doc && webgen'
+        parser 'zapps idiopidae/parser.g'
+)
